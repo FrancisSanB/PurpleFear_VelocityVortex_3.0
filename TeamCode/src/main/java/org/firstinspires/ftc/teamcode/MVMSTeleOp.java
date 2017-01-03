@@ -2,17 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
  * Created by Juan Pablo Martinez on 11/29/2015.
  */
-public class TestTeleOp extends MVMSTeleOpTelemetry {
+
+public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor leftback_motor;     //identify all of the motors
     DcMotor rightback_motor;
     DcMotor leftfront_motor;
     DcMotor rightfront_motor;
+    DcMotor shooterR;
+    DcMotor shooterL;
+    DcMotor elevator;
     DcMotor tumbler;
+    Servo Beacon;
+
+    int a = 1;
+    boolean shooterDown = false;
 
     @Override
     public void init() {
@@ -20,25 +28,38 @@ public class TestTeleOp extends MVMSTeleOpTelemetry {
         leftfront_motor = hardwareMap.dcMotor.get("leftfront_motor");   //of the motors in the
         rightback_motor = hardwareMap.dcMotor.get("rightback_motor");   //configure file on the
         rightfront_motor = hardwareMap.dcMotor.get("rightfront_motor"); //phone
+        shooterL = hardwareMap.dcMotor.get("shooterL");
+        shooterR = hardwareMap.dcMotor.get("shooterR");
+        elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
-    }
+        Beacon = hardwareMap.servo.get("Bacon");
 
+    }
 
     @Override
     public void loop() {                        //create a loop where the code goes
-
         float rightY = gamepad1.right_stick_y;  //create a float based off of the y axis of the left
         float leftY = -gamepad1.left_stick_y;   //and right joysticks
+        float elevatorUp = gamepad1.right_trigger;
+        float elevatorDown = gamepad1.left_trigger;
         boolean in = gamepad1.left_bumper;
         boolean out = gamepad1.right_bumper;
+        boolean shooter = gamepad1.a;
+        boolean beacon = gamepad1.b;
 
-        telemetry.addData("RightY", rightY);    //print out the current y axis of both joysticks
+        telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
+        telemetry.addData("(remember that even is turned on)a =", a);
         telemetry.addData("out", out);
         telemetry.addData("in", in);
+        telemetry.addData("shooter", shooter);
+        telemetry.addData("elevatorUp", elevatorUp);
+        telemetry.addData("elevatorDown", elevatorDown);
+        telemetry.addData("beacon", beacon);
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
+
 
         /*
         if (gamepad1.right_bumper) {
@@ -57,17 +78,48 @@ public class TestTeleOp extends MVMSTeleOpTelemetry {
         rightfront_motor.setPower(rightY);
 
 
-        if (out) {
-            tumbler.setPower(-1);
+        if (shooter) {
+            if (!shooterDown) {
+                    a = a + 1;
+            }
+        }
+
+        shooterDown = shooter;
+
+        if((a%2)==0) {
+            // even
+            shooterL.setPower(-1);
+            shooterR.setPower(1);
+
         } else {
+            // odd
+            shooterL.setPower(0);
+            shooterR.setPower(0);
+
+        }
+
+        if (!out && !in) {
             tumbler.setPower(0);
         }
-        if (in) {
+        if(out) {
             tumbler.setPower(1);
-        } else {
-            tumbler.setPower(0);
         }
+        if(in) {
+            tumbler.setPower(-1);
+        }
+
+        if(gamepad1.x) {
+            Beacon.setPosition(0.8);
+        }
+        if (gamepad1.y) {
+            Beacon.setPosition(0.2);
+        }
+
+        elevator.setPower(elevatorUp);
+
     }
+
+
 
 
     double scaleInput(double dVal)  {
