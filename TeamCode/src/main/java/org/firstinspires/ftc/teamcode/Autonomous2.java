@@ -2,45 +2,39 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import java.util.Timer;
+import com.qualcomm.robotcore.hardware.Servo;
 
 /**
- * Created by Francis on 11/21/2016.
+ * Created by Francis on 1/6/2017.
  */
-
-public class Autonomous extends LinearOpMode {
-
-    DcMotor leftfrontMotor;
-    DcMotor leftbackMotor;
-    DcMotor rightfrontMotor;
+public class Autonomous2 extends LinearOpMode {
+    DcMotor leftbackMotor;     //identify all of the motors
     DcMotor rightbackMotor;
+    DcMotor leftfrontMotor;
+    DcMotor rightfrontMotor;
+    DcMotor shooterR;
+    DcMotor shooterL;
+    DcMotor elevator;
     DcMotor tumbler;
-
+    Servo beaconServo;
 
     @Override
     public void runOpMode() throws InterruptedException {
-
-
-        leftfrontMotor = hardwareMap.dcMotor.get("leftfront_motor");     //grab the configure file on the phone
-        leftbackMotor = hardwareMap.dcMotor.get("leftback_motor");       //and compare it to the motors/sensors
-        rightfrontMotor = hardwareMap.dcMotor.get("rightfront_motor");  //in the code
-        rightbackMotor = hardwareMap.dcMotor.get("rightback_motor");
+        leftbackMotor = hardwareMap.dcMotor.get("leftback_motor");     //link each motor to each
+        leftfrontMotor = hardwareMap.dcMotor.get("leftfront_motor");   //of the motors in the
+        rightbackMotor = hardwareMap.dcMotor.get("rightback_motor");   //configure file on the
+        rightfrontMotor = hardwareMap.dcMotor.get("rightfront_motor"); //phone
+        shooterL = hardwareMap.dcMotor.get("shooterL");
+        shooterR = hardwareMap.dcMotor.get("shooterR");
+        elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
-
-        leftbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftfrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightfrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        beaconServo = hardwareMap.servo.get("Bacon");
 
         waitForStart();
 
-        PDTarget(1);
-        encoderDrive(1,1, 1);
+
 
     }
-
-
-
 
     private void tankdrive(double leftY, double rightY, long sleepAmount) throws InterruptedException{
         rightY = -rightY;
@@ -79,40 +73,17 @@ public class Autonomous extends LinearOpMode {
     }
 
     private void encoderDrive(double leftY, double rightY, int rotationNumber) throws InterruptedException {
+        telemetry.addData("encoderdrive called", leftY);
         rotationNumber = rotationNumber*1440;
 
         int leftTarget = leftbackMotor.getCurrentPosition() + rotationNumber;
         int rightTarget = rightbackMotor.getCurrentPosition() - rotationNumber;
 
         encoderTankDrive(leftY, rightY);
-
-        while (leftbackMotor.getCurrentPosition() < leftTarget && rightbackMotor.getCurrentPosition() > rightTarget) {}
+        long time = System.currentTimeMillis();
+        while(System.currentTimeMillis() < time+500) {}
+        //while (leftbackMotor.getCurrentPosition() < leftTarget && rightbackMotor.getCurrentPosition() > rightTarget) {}
         encoderTankDrive(0, 0);
-        //Math.abs(e) > 20 do this
+
     }
-
-    private final float P = 0.0001f;
-    private final float D = 0.0001f;
-    private void PDTarget(int leftTarget, int rightTarget) {
-        PDTarget(leftTarget, rightTarget, 500, 20);
-    }
-
-    private void PDTarget(int leftTarget, int rightTarget, long timeoutMs, int thresh) {
-        long startMs = System.currentTimeMillis();
-        double leftPower = 0;
-        double rightPower = 0;
-        int rightError = 0;
-        int rightDer = 0;
-        int leftError = 0;
-        int leftDer = 0;
-        while (System.currentTimeMillis() - startMs > timeoutMs) {
-            rightDer = 
-            rightError = rightbackMotor.getCurrentPosition() - rightTarget;
-            if (rightDer != 0 || leftDer != 0) {
-                startMs = System.currentTimeMillis();
-            }
-
-        }
-    }
-
 }

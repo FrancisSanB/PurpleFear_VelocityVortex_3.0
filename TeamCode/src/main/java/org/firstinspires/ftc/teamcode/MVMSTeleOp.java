@@ -17,7 +17,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor shooterL;
     DcMotor elevator;
     DcMotor tumbler;
-    Servo Beacon;
+    Servo beaconServo;
 
     int a = 1;
     boolean shooterDown = false;
@@ -32,7 +32,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         shooterR = hardwareMap.dcMotor.get("shooterR");
         elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
-        Beacon = hardwareMap.servo.get("Bacon");
+        beaconServo = hardwareMap.servo.get("Bacon");
 
     }
 
@@ -49,13 +49,14 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
-        telemetry.addData("(remember that even is turned on)a =", a);
+        telemetry.addData("a =", a);
         telemetry.addData("out", out);
         telemetry.addData("in", in);
         telemetry.addData("shooter", shooter);
         telemetry.addData("elevatorUp", elevatorUp);
         telemetry.addData("elevatorDown", elevatorDown);
         telemetry.addData("beacon", beacon);
+        telemetry.addData("servo power", beaconServo.getPosition());
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
@@ -86,7 +87,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         shooterDown = shooter;
 
-        if((a%2)==0) {
+        if(a % 2 == 0) {
             // even
             shooterL.setPower(-1);
             shooterR.setPower(1);
@@ -109,10 +110,10 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }
 
         if(gamepad1.x) {
-            Beacon.setPosition(0.8);
+            beaconServo.setPosition(0.8);
         }
         if (gamepad1.y) {
-            Beacon.setPosition(0.2);
+            beaconServo.setPosition(0.2);
         }
 
         elevator.setPower(elevatorUp);
