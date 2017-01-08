@@ -62,6 +62,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         rightY = (float) scaleInput(rightY);    //it
 
 
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
        /*
        if (gamepad1.right_bumper) {
            leftY = leftY / 2;
@@ -71,6 +72,17 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
            leftY = leftY / 4;
            rightY = rightY / 4;
        }*/
+=======
+        /*
+        if (gamepad1.right_bumper) {
+            leftY = leftY / 2;
+            rightY = rightY / 2;
+        }                                       //this is for
+        if (gamepad1.left_bumper) {
+            leftY = leftY / 4;
+            rightY = rightY / 4;
+        }*/
+>>>>>>> 42438bb151b99fed91b4cc35fe5894df5d8e026f:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
 
 
         leftback_motor.setPower(leftY);         //set the power to each corresponding motor
@@ -81,7 +93,11 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         if (shooter) {
             if (!shooterDown) {
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
                 a = a + 1;
+=======
+                    a = a + 1;
+>>>>>>> 42438bb151b99fed91b4cc35fe5894df5d8e026f:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
             }
         }
 
@@ -104,6 +120,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }
         if(out) {
             tumbler.setPower(1);
+<<<<<<< HEAD:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
         }
         if(in) {
             tumbler.setPower(-1);
@@ -114,6 +131,19 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         } else {
             beaconServo.setPosition(0.0);
         }
+=======
+        }
+        if(in) {
+            tumbler.setPower(-1);
+        }
+
+        if(gamepad1.x) {
+            beaconServo.setPosition(0.8);
+        }
+        if (gamepad1.y) {
+            beaconServo.setPosition(0.2);
+        }
+>>>>>>> 42438bb151b99fed91b4cc35fe5894df5d8e026f:TeamCode/src/main/java/org/firstinspires/ftc/teamcode/MVMSTeleOp.java
 
         elevator.setPower(elevatorUp);
 
