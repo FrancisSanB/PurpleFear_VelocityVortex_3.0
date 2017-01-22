@@ -35,15 +35,14 @@ public void runOpMode() throws InterruptedException {
         shooterDrive(-1, 1);
         sleep(1500);
         tumblerDrive(1);
-        elevatorDrive(1, 2000);
         sleep(2000);
         tumbler.setPower(0);
         tumbler.setPower(0);
         shooterLeft.setPower(0);
         shooterRight.setPower(0);
-       // tankdrive(-0.35, 0.35, 700);
-        //tankdrive(-0.3, -0.3, 3000);
-        //tankdrive(0.05, 0.3, 1500);
+        tankdrive(-0.35, 0.35, 700);
+        tankdrive(-0.3, -0.3, 3000);
+        tankdrive(0.05, 0.3, 1500);
 
 }
 
