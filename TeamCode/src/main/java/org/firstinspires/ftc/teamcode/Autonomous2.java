@@ -37,10 +37,7 @@ public class Autonomous2 extends LinearOpMode {
 
 
 
-        tankDrive(-0.3,-0.3,800);
-        tumbler(1);
-        shooter(1, 1);
-        sleep(2000);
+
         //elevator(0.3);
         sleep(3000);
         shooterL.setPower(0);
@@ -87,13 +84,6 @@ public class Autonomous2 extends LinearOpMode {
     private void tumbler(double power) throws InterruptedException {
         tumbler.setPower(power);
     }
-
-    /*private void elevator(double power) throws InterruptedException {
-        elevator.setPower(power);
-
-
-
-    }*/
 
     private void shooter(double leftpower, double rightpower) throws InterruptedException {
         shooterL.setPower(-leftpower);

@@ -75,14 +75,19 @@ public class Autonomous1 extends LinearOpMode {
 
     // }
 
+   // private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
+        //elevator.setPower(power);
+        //sleep(sleepAmount);
+        //elevator.setPower(0);
 
+   // }
 
 
 
     private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterLeft.setPower(leftpower);
         shooterRight.setPower(rightpower);
-    }
 
+    }
 
 }

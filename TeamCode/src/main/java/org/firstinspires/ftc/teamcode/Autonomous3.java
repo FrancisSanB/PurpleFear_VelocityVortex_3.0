@@ -27,7 +27,7 @@ public class Autonomous3 extends LinearOpMode {
         tumbler = hardwareMap.dcMotor.get("tublr");
         shooterLeft = hardwareMap.dcMotor.get("shooterL");
         shooterRight = hardwareMap.dcMotor.get("shooterR");
-        //elevator = hardwareMap.dcMotor.get("elevator");
+        //elevator = hardwareMap.dcMotor.get("elevator")'
 
         waitForStart();
 
@@ -61,13 +61,22 @@ public class Autonomous3 extends LinearOpMode {
         leftbackMotor.setPower(0);
         rightfrontMotor.setPower(0);
         rightbackMotor.setPower(0);
+
     }
 
     private void tumblerDrive(double power) throws InterruptedException {
         tumbler.setPower(power);
     }
 
-   /* private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
+    /* private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
+
+        }
+
+    private void tumblerDrive(double power) throws InterruptedException {
+        tumbler.setPower(power);
+        }
+
+    private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
         elevator.setPower(power);
         sleep(sleepAmount);
         elevator.setPower(0);
@@ -82,4 +91,3 @@ public class Autonomous3 extends LinearOpMode {
 
 
 }
-

@@ -64,8 +64,7 @@ import org.firstinspires.ftc.robotcontroller.external.samples.*;
  * Then uncomment and copy the manager.register() call to register as many of your OpModes as you like.
  * You can even use it to temporarily register samples directly from the robotController/external/samples folder.
  */
-public class RegisterOpModes
-{
+public class RegisterOpModes {
 
     @OpModeRegistrar
     public static void registerMyOpModes(OpModeManager manager) {

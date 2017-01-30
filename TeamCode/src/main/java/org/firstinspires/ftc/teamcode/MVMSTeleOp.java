@@ -63,6 +63,16 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         rightY = (float) scaleInput(rightY);    //it
 
 
+       /*
+       if (gamepad1.right_bumper) {
+           leftY = leftY / 2;
+           rightY = rightY / 2;
+       }                                       //this is for
+       if (gamepad1.left_bumper) {
+           leftY = leftY / 4;
+           rightY = rightY / 4;
+       }*/
+
         /*
         if (gamepad1.right_bumper) {
             leftY = leftY / 2;
@@ -74,6 +84,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }*/
 
 
+
         leftback_motor.setPower(leftY);         //set the power to each corresponding motor
         rightback_motor.setPower(rightY);
         leftfront_motor.setPower(leftY);
@@ -82,7 +93,11 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         if (shooter) {
             if (!shooterDown) {
+
+                a = a + 1;
+
                     a = a + 1;
+
             }
         }
 
@@ -105,7 +120,12 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }
         if(out) {
             tumbler.setPower(1);
+
         }
+        if(in) {
+            tumbler.setPower(-1);
+        }
+
         if(in) {
             tumbler.setPower(-1);
         }
@@ -122,8 +142,12 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }
 
         //elevator.setPower(elevatorUp);
-
     }
+
+
+
+
+
 
 
 
@@ -162,5 +186,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         return dScale;
     }
 }
+
+
 
 
