@@ -111,7 +111,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         }
 
         if (gamepad1.b) {
-            beaconServo2.setPosition(0.2);
+            beaconServo2.setPosition(0.1);
         }
         if (gamepad1.x) {
             beaconServo1.setPosition(0.9);

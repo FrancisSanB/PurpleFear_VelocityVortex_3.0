@@ -82,10 +82,6 @@ public class Autonomous1 extends LinearOpMode {
     private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterLeft.setPower(leftpower);
         shooterRight.setPower(rightpower);
-
-
-
-
     }
 
 
