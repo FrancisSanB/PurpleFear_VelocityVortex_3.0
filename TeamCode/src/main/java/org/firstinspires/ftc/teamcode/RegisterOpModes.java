@@ -84,12 +84,15 @@ public class RegisterOpModes
         //  Concept Samples
         // manager.register("Null Op",                ConceptNullOp.class);
         manager.register("PacoTacoTeleOp",MVMSTeleOp.class);
-        //manager.register("(1)Color Sensor Test",ColourSensorTestCode.class);
-        //manager.register("(2)Color Sensor(not stable)",ColorSensorDrive.class);
-        //manager.register("(3)Autonomous Color Sensor", AutonomousColourSensor.class);
-        //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
+        manager.register("Autonomous1", Autonomous1.class);
+        manager.register("Autonomous2", Autonomous2.class);
+        manager.register("Autonomous3", Autonomous3.class);
+        manager.register("Autonomous4", Autonomous4.class);
+        manager.register("AutonomousEdmund", Autonomous2.class);
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
-        manager.register("AutonomousBlueLine", Autonomous2.class);
+        manager.register("AutonomousVuforia", AutonomousVuforia.class);
+        manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
+        //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
 
     }
 }

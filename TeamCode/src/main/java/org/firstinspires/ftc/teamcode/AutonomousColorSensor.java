@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 /**
  * Created by pfernand on 2/17/2016.
  */
-public class AutonomousColourSensor extends LinearOpMode{
+public class AutonomousColorSensor extends LinearOpMode{
     DcMotor leftfrontMotor;     //identify the motors and sensors
     DcMotor leftbackMotor;
     DcMotor rightfrontMotor;

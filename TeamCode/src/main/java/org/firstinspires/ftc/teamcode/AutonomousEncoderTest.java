@@ -95,8 +95,26 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
         encoderTankDrive(leftY, rightY);
         long time = System.currentTimeMillis();
-        while(System.currentTimeMillis() < time+500) {}
-        //while (leftbackMotor.getCurrentPosition() < leftTarget && rightbackMotor.getCurrentPosition() > rightTarget) {}
+        boolean atLeftTarget, atRightTarget;
+        boolean isLeftReversed = leftY < 0;
+        boolean isRightReversed = rightY < 0;
+        while(true) {
+            atLeftTarget = leftbackMotor.getCurrentPosition() >= leftTarget;
+            atRightTarget = rightbackMotor.getCurrentPosition() <= rightTarget;
+            if (atLeftTarget && atRightTarget) {
+                break;
+            } else if (atLeftTarget) {
+                rightbackMotor.setPower(rightY);
+                rightfrontMotor.setPower(rightY);
+            } else if (atRightTarget) {
+                leftbackMotor.setPower(leftY);
+                leftfrontMotor.setPower(rightY);
+            }else {
+                encoderTankDrive(leftY, rightY);
+            }
+            sleep(50);
+        }
+
         encoderTankDrive(0, 0);
 
     }
