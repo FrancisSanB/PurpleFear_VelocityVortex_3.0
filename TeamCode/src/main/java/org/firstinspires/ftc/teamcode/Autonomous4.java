@@ -31,26 +31,15 @@ public class Autonomous4 extends LinearOpMode {
 
         waitForStart();
 
-
-        tankDrive(-0.3, -0.3, 800);
-        tumbler(1);
-        shooter(1, 1);
+        tankDrive(-0.3, -0.3, 1900);
+        shooterDrive(1, -1);
+        sleep(5000);
+        tumblerDrive(1);
         sleep(2000);
-        //elevator(0.3);
-        sleep(3000);
-        shooterL.setPower(0);
-        shooterR.setPower(0);
-        // elevator.setPower(0);
-        tumbler.setPower(0);
-        tankDrive(-0.3, -0.3, 1500);
-        tankDrive(-0.3, 0.3, 1500);
-        tankDrive(-0.3, -0.3, 1100);
-       /*
-      tankDrive(0.3,0.3,1400);
-      tankDrive(-0.3,0.3,300);
-      tankDrive(0.3,0.3,700);
-      */
-
+        tumblerDrive(0);
+        shooterDrive(0, 0);
+        tankDrive(-0.35, 0.35, 300);
+        tankDrive(-0.3, -0.3, 1000);
 
     }
 
@@ -72,7 +61,7 @@ public class Autonomous4 extends LinearOpMode {
         rightbackMotor.setPower(0);
     }
 
-    private void tumbler(double power) throws InterruptedException {
+    private void tumblerDrive(double power) throws InterruptedException {
         tumbler.setPower(power);
     }
     // private void elevator(double power) throws InterruptedException {
@@ -81,7 +70,7 @@ public class Autonomous4 extends LinearOpMode {
 
 //    }
 
-    private void shooter(double leftpower, double rightpower) throws InterruptedException {
+    private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterL.setPower(-leftpower);
         shooterR.setPower(rightpower);
 

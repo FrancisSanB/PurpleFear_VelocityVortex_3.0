@@ -34,18 +34,18 @@ public class Autonomous2 extends LinearOpMode {
 
         waitForStart();
 
-        tankdrive(-0.3, -0.3, 650);
+        tankDrive(-0.3, -0.3, 1200);
         shooterDrive(1, -1);
-        sleep(1500);
+        sleep(5000);
         tumblerDrive(1);
         sleep(2000);
         tumblerDrive(0);
         shooterDrive(0, 0);
-        tankdrive(-0.3, -0.3, 3000);
+        tankDrive(-0.35, -0.35, 3000);
 
     }
 
-    private void tankdrive(double leftY, double rightY, long sleepAmount) throws InterruptedException{
+    private void tankDrive(double leftY, double rightY, long sleepAmount) throws InterruptedException{
         rightY = -rightY;
 
         leftfrontMotor.setPower(leftY); //set the according power to each motor
@@ -60,6 +60,7 @@ public class Autonomous2 extends LinearOpMode {
         leftbackMotor.setPower(0);
         rightfrontMotor.setPower(0);
         rightbackMotor.setPower(0);
+
     }
 
     private void tumblerDrive(double power) throws InterruptedException {
@@ -69,21 +70,6 @@ public class Autonomous2 extends LinearOpMode {
     private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterL.setPower(-leftpower);
         shooterR.setPower(rightpower);
-
-
-
-
-    }
-
-
-
-
-
-
-    private void tumblerDrive(double power, long sleepAmount) throws InterruptedException {
-        tumbler.setPower(power);
-        sleep(sleepAmount);
-        tumbler.setPower(power);
 
     }
 

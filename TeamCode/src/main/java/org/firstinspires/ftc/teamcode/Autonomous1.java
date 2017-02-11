@@ -30,21 +30,19 @@ public class Autonomous1 extends LinearOpMode {
         //elevator = hardwareMap.dcMotor.get("elevator");
 
         waitForStart();
-
-        tankdrive(-0.3, -0.3, 650);
+        tankDrive(-0.3, -0.3, 650);
         shooterDrive(1, -1);
         sleep(5000);
         tumblerDrive(1);
         sleep(2000);
         tumblerDrive(0);
         shooterDrive(0, 0);
-         tankdrive(0.35, -0.35, 300);
-        tankdrive(-0.3, -0.3, 2500);
+        tankDrive(0.35, -0.35, 300);
+        tankDrive(-0.3, -0.3, 2500);
 
     }
 
-
-    private void tankdrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
+    private void tankDrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
 
         rightY = -rightY;               //flip the power of the right side
 
@@ -64,8 +62,6 @@ public class Autonomous1 extends LinearOpMode {
     private void tumblerDrive(double power) throws InterruptedException {
         tumbler.setPower(power);
     }
-
-
 
 
     private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
