@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 /**
  * Created by pfernand on 2/17/2016.
  */
-public class AutonomousColourSensor extends LinearOpMode{
+public class AutonomousColorSensor extends LinearOpMode{
     DcMotor leftfrontMotor;     //identify the motors and sensors
     DcMotor leftbackMotor;
     DcMotor rightfrontMotor;
@@ -76,10 +76,6 @@ public class AutonomousColourSensor extends LinearOpMode{
             telemetry.addData("Green", sensorRGB.green());
             telemetry.addData("Blue ", sensorRGB.blue());
             telemetry.addData("Hue", hsvValues[0]);
-
-            // wait a hardware cycle before iterating.
-            waitOneFullHardwareCycle();
-
         }
         leftfrontMotor.setPower(0.0);
         leftbackMotor.setPower(0.0);

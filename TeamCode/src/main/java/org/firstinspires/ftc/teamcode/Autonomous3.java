@@ -9,17 +9,17 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  */
 public class Autonomous3 extends LinearOpMode {
 
-        DcMotor leftfrontMotor;
-        DcMotor leftbackMotor;
-        DcMotor rightfrontMotor;
-        DcMotor rightbackMotor;
-        DcMotor shooterLeft;
-        DcMotor shooterRight;
-        DcMotor tumbler;
-        DcMotor elevator;
+    DcMotor leftfrontMotor;
+    DcMotor leftbackMotor;
+    DcMotor rightfrontMotor;
+    DcMotor rightbackMotor;
+    DcMotor shooterLeft;
+    DcMotor shooterRight;
+    DcMotor tumbler;
+   // DcMotor elevator;
 
-@Override
-public void runOpMode() throws InterruptedException {
+    @Override
+    public void runOpMode() throws InterruptedException {
         leftfrontMotor = hardwareMap.dcMotor.get("leftfront_motor");     //grab the configure file on the phone
         leftbackMotor = hardwareMap.dcMotor.get("leftback_motor");       //and compare it to the motors/sensors
         rightfrontMotor = hardwareMap.dcMotor.get("rightfront_motor");  //in the code
@@ -27,28 +27,23 @@ public void runOpMode() throws InterruptedException {
         tumbler = hardwareMap.dcMotor.get("tublr");
         shooterLeft = hardwareMap.dcMotor.get("shooterL");
         shooterRight = hardwareMap.dcMotor.get("shooterR");
-        elevator = hardwareMap.dcMotor.get("elevator");
+        //elevator = hardwareMap.dcMotor.get("elevator")'
 
         waitForStart();
 
-        tankdrive(-0.3, -0.3, 650);
-        shooterDrive(-1, 1);
-        sleep(1500);
+        tankDrive(-0.3, -0.3, 650);
+        shooterDrive(1, -1);
+        sleep(5000);
         tumblerDrive(1);
         sleep(2000);
-        tumbler.setPower(0);
-        tumbler.setPower(0);
-        shooterLeft.setPower(0);
-        shooterRight.setPower(0);
-        tankdrive(-0.35, 0.35, 700);
-        tankdrive(-0.3, -0.3, 3000);
-        tankdrive(0.05, 0.3, 1500);
+        tumblerDrive(0);
+        shooterDrive(0, 0);
+        tankDrive(-0.35, -0.35, 3000);
 
-}
+    }
 
 
-private void tankdrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
-
+    private void tankDrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
         rightY = -rightY;               //flip the power of the right side
 
         leftfrontMotor.setPower(leftY); //set the according power to each motor
@@ -62,29 +57,17 @@ private void tankdrive(double leftY, double rightY, long sleepAmount) throws Int
         leftbackMotor.setPower(0);
         rightfrontMotor.setPower(0);
         rightbackMotor.setPower(0);
-        }
 
-private void tumblerDrive(double power) throws InterruptedException {
-        tumbler.setPower(power);
-        }
+    }
 
-private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
-        elevator.setPower(power);
-        sleep(sleepAmount);
-        elevator.setPower(0);
-
-        }
-
-private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
+    private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterLeft.setPower(leftpower);
         shooterRight.setPower(rightpower);
 
+    }
 
+    private void tumblerDrive(double power) throws InterruptedException {
+        tumbler.setPower(power);
+    }
 
-
-        }
-
-
-        }
-
-
+}
