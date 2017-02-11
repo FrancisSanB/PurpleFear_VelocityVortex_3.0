@@ -33,7 +33,7 @@ public class BeaconAutonomous extends LinearOpMode {
     DcMotor tumbler;
     DcMotor shooterRight;
     DcMotor shooterLeft;
-    DcMotor elevator;
+    //DcMotor elevator;
     Servo beaconright;
     Servo beaconleft;
     ColorSensor ColorSensor;
@@ -49,7 +49,7 @@ public class BeaconAutonomous extends LinearOpMode {
         tumbler = hardwareMap.dcMotor.get("tublr");
         shooterLeft = hardwareMap.dcMotor.get("shooterL");
         shooterRight = hardwareMap.dcMotor.get("shooterR");
-        elevator = hardwareMap.dcMotor.get("elevator");
+        //elevator = hardwareMap.dcMotor.get("elevator");
         beaconright = hardwareMap.servo.get("bacon");
         beaconleft = hardwareMap.servo.get("bacon2");
 
@@ -82,7 +82,7 @@ public class BeaconAutonomous extends LinearOpMode {
         shooterDrive(-1, 1);
         sleep(1500);
         tumblerDrive(1);
-        elevatorDrive(1, 2000);
+        //elevatorDrive(1, 2000);
         sleep(2000);
         tumbler.setPower(0);
         tumbler.setPower(0);
@@ -154,7 +154,7 @@ public class BeaconAutonomous extends LinearOpMode {
                     tankdrive(-0.3, 0.3, 500);
 
 
-                    telemetry.addData("YOU'VE ARRIVED AT YOUR DESTINATION", beacon_aligned);
+                    telemetry.addData("YOU'VE ARRIVED AT SOOUBWAY EXTENSIONS", beacon_aligned);
                 }
             }
             telemetry.update();
@@ -204,12 +204,12 @@ public class BeaconAutonomous extends LinearOpMode {
         tumbler.setPower(power);
     }
 
-    private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
-        elevator.setPower(power);
-        sleep(sleepAmount);
-        elevator.setPower(0);
+    //private void elevatorDrive(double power, long sleepAmount) throws InterruptedException {
+        //elevator.setPower(power);
+      //  sleep(sleepAmount);
+        //elevator.setPower(0);
 
-    }
+//    }
 
     private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterLeft.setPower(leftpower);
@@ -221,7 +221,7 @@ public class BeaconAutonomous extends LinearOpMode {
     private void stopMotors() throws InterruptedException {
         shooterLeft.setPower(0);
         shooterRight.setPower(0);
-        elevator.setPower(0);
+        //elevator.setPower(0);
         tumbler.setPower(0);
         leftfrontmotor.setPower(0);
         leftbackmotor.setPower(0);

@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 import android.hardware.Sensor;
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -83,7 +84,7 @@ public class RegisterOpModes {
         //  Concept Samples
         // manager.register("Null Op",                ConceptNullOp.class);
 
-        manager.register("MVMSTeleOp", MVMSTeleOp.class);
+        /*manager.register("MVMSTeleOp", MVMSTeleOp.class);
         //manager.register("ComputerVision",ComputerVision.class);
         manager.register("Autonomous1", Autonomous1.class);
         manager.register("BeaconAutonomous", BeaconAutonomous.class);
@@ -98,7 +99,8 @@ public class RegisterOpModes {
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
         manager.register("AutonomousBlueLine", Autonomous2.class);
-        manager.register("ServoTest3", ServoTest3.class);
-
+        manager.register("ServoTest3", ServoTest3.class);*/
+        manager.register("teleop", org.firstinspires.ftc.teamcode.TeleOp.class);
+        manager.register("color", ColorSensorAutonomous.class);
     }
 }
