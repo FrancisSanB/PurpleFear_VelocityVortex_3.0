@@ -16,9 +16,9 @@ public class Autonomous2 extends LinearOpMode {
     DcMotor rightfrontMotor;
     DcMotor shooterR;
     DcMotor shooterL;
-   // DcMotor elevator;
-    DcMotor tumbler;
     Servo beaconServo;
+    DcMotor tumbler;
+    // DcMotor elevator;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -28,39 +28,20 @@ public class Autonomous2 extends LinearOpMode {
         rightfrontMotor = hardwareMap.dcMotor.get("rightfront_motor"); //phone
         shooterL = hardwareMap.dcMotor.get("shooterL");
         shooterR = hardwareMap.dcMotor.get("shooterR");
-        //elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
         beaconServo = hardwareMap.servo.get("Bacon");
-
+        //elevator = hardwareMap.dcMotor.get("elevator");
 
         waitForStart();
 
-
-
-
-        //elevator(0.3);
-        sleep(3000);
-        shooterL.setPower(0);
-        shooterR.setPower(0);
-        //elevator.setPower(0);
-        tumbler.setPower(0);
-        //tankDrive(-0.3,-0.3,1500);
-        //tankDrive(0.3,-0.3,1500);
-        //tankDrive(-0.3,-0.3,1100);
-       /*
-      tankDrive(0.3,0.3,1400);
-      tankDrive(-0.3,0.3,300);
-      tankDrive(0.3,0.3,700);
-      */
-
-
-    }
-
-
-    private void tankDrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
-
-        rightY = -rightY;               //flip the power of the right side
-
+        tankdrive(-0.3, -0.3, 650);
+        shooterDrive(1, -1);
+        sleep(1500);
+        tumblerDrive(1);
+        sleep(2000);
+        tumblerDrive(0);
+        shooterDrive(0, 0);
+        tankdrive(-0.3, -0.3, 3000);
 
     }
 
@@ -81,11 +62,11 @@ public class Autonomous2 extends LinearOpMode {
         rightbackMotor.setPower(0);
     }
 
-    private void tumbler(double power) throws InterruptedException {
+    private void tumblerDrive(double power) throws InterruptedException {
         tumbler.setPower(power);
     }
 
-    private void shooter(double leftpower, double rightpower) throws InterruptedException {
+    private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
         shooterL.setPower(-leftpower);
         shooterR.setPower(rightpower);
 

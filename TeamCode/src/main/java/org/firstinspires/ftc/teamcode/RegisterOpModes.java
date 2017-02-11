@@ -87,10 +87,11 @@ public class RegisterOpModes {
         manager.register("Autonomous2", Autonomous2.class);
         manager.register("Autonomous3", Autonomous3.class);
         manager.register("Autonomous4", Autonomous4.class);
-        manager.register("AutonomousEdmund", Autonomous2.class);
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
         manager.register("AutonomousVuforia", AutonomousVuforia.class);
         manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
+        manager.register("GoogleMapsMcDs", PacoVisionAutonomouse.class);
+        manager.register("notyetColoblindPaco", PacoColorAutonomouse.class);
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
 
     }

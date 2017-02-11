@@ -15,10 +15,10 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor rightfront_motor;
     DcMotor shooterR;
     DcMotor shooterL;
-    //DcMotor elevator;
-    DcMotor tumbler;
     Servo beaconServo1;
     Servo beaconServo2;
+    DcMotor tumbler;
+    //DcMotor elevator;
 
     int a = 1;
     boolean shooterDown = false;
@@ -31,10 +31,10 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         rightfront_motor = hardwareMap.dcMotor.get("rightfront_motor"); //phone
         shooterL = hardwareMap.dcMotor.get("shooterL");
         shooterR = hardwareMap.dcMotor.get("shooterR");
-        //elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
         beaconServo1 = hardwareMap.servo.get("Bacon");
         beaconServo2 = hardwareMap.servo.get("Bacon2");
+        //elevator = hardwareMap.dcMotor.get("elevator");
 
     }
 
@@ -42,11 +42,11 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     public void loop() {                        //create a loop where the code goes
         float rightY = gamepad1.right_stick_y;  //create a float based off of the y axis of the left
         float leftY = -gamepad1.left_stick_y;   //and right joysticks
-        //float elevatorUp = gamepad1.right_trigger;
-        //float elevatorDown = gamepad1.left_trigger;
         boolean in = gamepad1.left_bumper;
         boolean out = gamepad1.right_bumper;
         boolean shooter = gamepad1.a;
+        //float elevatorUp = gamepad1.right_trigger;
+        //float elevatorDown = gamepad1.left_trigger;
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
@@ -55,9 +55,9 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         telemetry.addData("in", in);
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
+        telemetry.addData("servo power", beaconServo1.getPosition());
         //telemetry.addData("elevatorUp", elevatorUp);
         //telemetry.addData("elevatorDown", elevatorDown);
-        telemetry.addData("servo power", beaconServo1.getPosition());
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
@@ -93,10 +93,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         if (shooter) {
             if (!shooterDown) {
-
                 a = a + 1;
-
-                    a = a + 1;
 
             }
         }
