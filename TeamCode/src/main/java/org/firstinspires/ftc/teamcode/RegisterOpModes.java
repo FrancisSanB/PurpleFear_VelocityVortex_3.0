@@ -90,6 +90,8 @@ public class RegisterOpModes {
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
         manager.register("AutonomousVuforia", AutonomousVuforia.class);
         manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
+        manager.register("GoogleMapsMcDs", PacoVisionAutonomouse.class);
+        manager.register("notyetColoblindPaco", PacoColorAutonomouse.class);
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
 
     }

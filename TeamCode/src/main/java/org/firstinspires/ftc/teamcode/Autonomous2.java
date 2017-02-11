@@ -16,9 +16,9 @@ public class Autonomous2 extends LinearOpMode {
     DcMotor rightfrontMotor;
     DcMotor shooterR;
     DcMotor shooterL;
-   // DcMotor elevator;
-    DcMotor tumbler;
     Servo beaconServo;
+    DcMotor tumbler;
+    // DcMotor elevator;
 
     @Override
     public void runOpMode() throws InterruptedException {

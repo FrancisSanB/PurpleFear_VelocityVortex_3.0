@@ -24,7 +24,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     Servo beaconServo2;
     DcMotor tumbler;
     ElapsedTime timerz = new ElapsedTime();
-    //DcMotor elevator;
 
     int a = 1;
     boolean shooterDown = false;
@@ -41,6 +40,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         tumbler = hardwareMap.dcMotor.get("tublr");
         beaconServo1 = hardwareMap.servo.get("Bacon");
         beaconServo2 = hardwareMap.servo.get("Bacon2");
+        //elevator = hardwareMap.dcMotor.get("elevator");
 
     }
 
@@ -108,7 +108,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
         if (shooter) {
             if (!shooterDown) {
-
                 a = a + 1;
 
             }
