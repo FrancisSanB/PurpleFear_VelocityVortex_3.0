@@ -76,10 +76,6 @@ public class AutonomousColorSensor extends LinearOpMode{
             telemetry.addData("Green", sensorRGB.green());
             telemetry.addData("Blue ", sensorRGB.blue());
             telemetry.addData("Hue", hsvValues[0]);
-
-            // wait a hardware cycle before iterating.
-            waitOneFullHardwareCycle();
-
         }
         leftfrontMotor.setPower(0.0);
         leftbackMotor.setPower(0.0);
