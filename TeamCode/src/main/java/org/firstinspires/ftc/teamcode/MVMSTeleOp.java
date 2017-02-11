@@ -3,11 +3,16 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * Created by Juan Pablo Martinez on 11/29/2015.
  */
-
+//*******************************************************************************
+//*******************************************************************************
+//SHOOTER IS NOT WORKING + BOTH SERVO ARMS ARE NOT RETRACTING      -Edward  *****
+//*******************************************************************************
+//*******************************************************************************
 public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor leftback_motor;     //identify all of the motors
     DcMotor rightback_motor;
@@ -15,13 +20,15 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor rightfront_motor;
     DcMotor shooterR;
     DcMotor shooterL;
-    //DcMotor elevator;
-    DcMotor tumbler;
     Servo beaconServo1;
     Servo beaconServo2;
+    DcMotor tumbler;
+    ElapsedTime timerz = new ElapsedTime();
+    //DcMotor elevator;
 
     int a = 1;
     boolean shooterDown = false;
+
 
     @Override
     public void init() {
@@ -31,7 +38,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         rightfront_motor = hardwareMap.dcMotor.get("rightfront_motor"); //phone
         shooterL = hardwareMap.dcMotor.get("shooterL");
         shooterR = hardwareMap.dcMotor.get("shooterR");
-        //elevator = hardwareMap.dcMotor.get("elevator");
         tumbler = hardwareMap.dcMotor.get("tublr");
         beaconServo1 = hardwareMap.servo.get("Bacon");
         beaconServo2 = hardwareMap.servo.get("Bacon2");
@@ -42,11 +48,18 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     public void loop() {                        //create a loop where the code goes
         float rightY = gamepad1.right_stick_y;  //create a float based off of the y axis of the left
         float leftY = -gamepad1.left_stick_y;   //and right joysticks
-        //float elevatorUp = gamepad1.right_trigger;
-        //float elevatorDown = gamepad1.left_trigger;
         boolean in = gamepad1.left_bumper;
         boolean out = gamepad1.right_bumper;
         boolean shooter = gamepad1.a;
+        boolean shooterBack = gamepad1.dpad_up;
+        //float elevatorUp = gamepad1.right_trigger;
+        //float elevatorDown = gamepad1.left_trigger;
+
+        shooterL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooterR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        float alpha = shooterL.getCurrentPosition();
+        float omega = shooterR.getCurrentPosition();
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
@@ -55,13 +68,15 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         telemetry.addData("in", in);
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
+        telemetry.addData("servo power", beaconServo1.getPosition());
+        telemetry.addData("shooter encoder values left", alpha);
+        telemetry.addData("shooter encoder values right", omega);
+        telemetry.addData("time", timerz);
         //telemetry.addData("elevatorUp", elevatorUp);
         //telemetry.addData("elevatorDown", elevatorDown);
-        telemetry.addData("servo power", beaconServo1.getPosition());
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
-
 
        /*
        if (gamepad1.right_bumper) {
@@ -96,8 +111,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
 
                 a = a + 1;
 
-                    a = a + 1;
-
             }
         }
 
@@ -113,6 +126,11 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
             shooterL.setPower(0);
             shooterR.setPower(0);
 
+        }
+
+        if (shooterBack) {
+            shooterL.setPower(-1);
+            shooterR.setPower(1);
         }
 
         if (!out && !in) {
