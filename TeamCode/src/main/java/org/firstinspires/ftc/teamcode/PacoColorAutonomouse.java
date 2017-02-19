@@ -34,8 +34,6 @@ public class PacoColorAutonomouse extends OpMode{
 
     @Override
     public void init() {
-        runtime.reset();
-
         leftfrontMotor = hardwareMap.dcMotor.get("leftfront_motor");     //grab the configure file on the phone
         leftbackMotor = hardwareMap.dcMotor.get("leftback_motor");       //and compare it to the motors/sensors
         rightfrontMotor = hardwareMap.dcMotor.get("rightfront_motor");  //in the code
@@ -55,11 +53,11 @@ public class PacoColorAutonomouse extends OpMode{
 
     }
     public void start() {
-
+        runtime.reset();
     }
 
     private void colorSensor(int pacoMin, int pacoMax){
-        
+
     }
     @Override
     public void loop() {
@@ -78,6 +76,7 @@ public class PacoColorAutonomouse extends OpMode{
         }
         //display values
         telemetry.addData("2 #C", colorCcache[0] & 0xFF);  //colorCcashe[0] is the color number
+                                                           // 3 is blue, 10 is red
 
         telemetry.addData("4 A", colorCreader.getI2cAddress().get8Bit());
 
@@ -87,6 +86,4 @@ public class PacoColorAutonomouse extends OpMode{
     @Override
     public void stop() {
     }
-
-
 }
