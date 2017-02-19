@@ -6,13 +6,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * Created by Juan Pablo Martinez on 11/29/2015.
+ * Created by Francis on 11/29/2015.
  */
-//*******************************************************************************
-//*******************************************************************************
-//SHOOTER IS NOT WORKING + BOTH SERVO ARMS ARE NOT RETRACTING      -Edward  *****
-//*******************************************************************************
-//*******************************************************************************
+
 public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     DcMotor leftback_motor;     //identify all of the motors
     DcMotor rightback_motor;
@@ -40,7 +36,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         tumbler = hardwareMap.dcMotor.get("tublr");
         beaconServo1 = hardwareMap.servo.get("Bacon");
         beaconServo2 = hardwareMap.servo.get("Bacon2");
-        //elevator = hardwareMap.dcMotor.get("elevator");
 
     }
 
@@ -52,14 +47,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         boolean out = gamepad1.right_bumper;
         boolean shooter = gamepad1.a;
         boolean shooterBack = gamepad1.dpad_up;
-        //float elevatorUp = gamepad1.right_trigger;
-        //float elevatorDown = gamepad1.left_trigger;
-
-        shooterL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        shooterR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        float alpha = shooterL.getCurrentPosition();
-        float omega = shooterR.getCurrentPosition();
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
@@ -69,36 +56,10 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
         telemetry.addData("servo power", beaconServo1.getPosition());
-        telemetry.addData("shooter encoder values left", alpha);
-        telemetry.addData("shooter encoder values right", omega);
         telemetry.addData("time", timerz);
-        //telemetry.addData("elevatorUp", elevatorUp);
-        //telemetry.addData("elevatorDown", elevatorDown);
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
-
-       /*
-       if (gamepad1.right_bumper) {
-           leftY = leftY / 2;
-           rightY = rightY / 2;
-       }                                       //this is for
-       if (gamepad1.left_bumper) {
-           leftY = leftY / 4;
-           rightY = rightY / 4;
-       }*/
-
-        /*
-        if (gamepad1.right_bumper) {
-            leftY = leftY / 2;
-            rightY = rightY / 2;
-        }                                       //this is for
-        if (gamepad1.left_bumper) {
-            leftY = leftY / 4;
-            rightY = rightY / 4;
-        }*/
-
-
 
         leftback_motor.setPower(leftY);         //set the power to each corresponding motor
         rightback_motor.setPower(rightY);
@@ -157,16 +118,7 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
             beaconServo1.setPosition(0.2);
             beaconServo2.setPosition(0.9);
         }
-
-        //elevator.setPower(elevatorUp);
     }
-
-
-
-
-
-
-
 
 
     double scaleInput(double dVal)  {
