@@ -42,7 +42,7 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
         waitForStart();
 
-        encoderDrive(1, 1, 1);
+        encoderDrive(1, 1, 5);
 
     }
 
@@ -87,36 +87,45 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
     private void encoderDrive(double leftY, double rightY, int distance) throws InterruptedException {
         distance = distance*1440;
+        //telemetry.addData(">", "method called");
 
-        //reset the encoders
         leftbackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightbackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //reset the encoders
+        leftbackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightbackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //tell it to start counting the position
+        /*leftbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
         //set the distance
         leftbackMotor.setTargetPosition(distance);
         rightbackMotor.setTargetPosition(distance);
 
-        //tell it to start counting the position
-        leftbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //telemetry.addData(">","encoder values set");
 
         //set the power
         encoderTankDrive(leftY, rightY);
 
-        while (leftbackMotor.isBusy() && rightbackMotor.isBusy()) {
+        while (opModeIsActive() && leftbackMotor.getCurrentPosition() < (distance - 180) && rightbackMotor.getCurrentPosition() < (distance - 180)) {
+            /*telemetry.addData("number of ticks right", rightbackMotor.getCurrentPosition());
+            telemetry.addData("number of ticks left", leftbackMotor.getCurrentPosition());
+            telemetry.update();*/
             //wait until the position is reached
-
         }
 
-        encoderTankDrive(0, 0);
+        //telemetry.addData(">", "while loop called");
+        //telemetry.addData("number of ticks right", rightbackMotor.getCurrentPosition());
 
-        leftbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightfrontMotor.setPower(0);
+        leftfrontMotor.setPower(0);
 
     }
 
-    /*
-    private void encoderDrive(double leftY, double rightY, int rotationNumber) throws InterruptedException {
+
+    private void encoderDrivesPD(double leftY, double rightY, int rotationNumber) throws InterruptedException {
         telemetry.addData("encoderdrive called", leftY);
         rotationNumber = rotationNumber*1440;
 
@@ -184,7 +193,7 @@ public class AutonomousEncoderTest extends LinearOpMode {
         double pdTerm = P*leftError + D*(leftError - lastLeftError);
         lastLeftError = leftError;
         return constrain(pdTerm, -1.0, 1.0);
-    } */
+    }
 
     /**
      * Returns v constrained between min and max

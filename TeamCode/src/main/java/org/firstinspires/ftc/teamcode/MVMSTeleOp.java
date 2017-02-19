@@ -19,7 +19,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
     Servo beaconServo1;
     Servo beaconServo2;
     DcMotor tumbler;
-    ElapsedTime timerz = new ElapsedTime();
 
     int a = 1;
     boolean shooterDown = false;
@@ -56,7 +55,6 @@ public class MVMSTeleOp extends MVMSTeleOpTelemetry {
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
         telemetry.addData("servo power", beaconServo1.getPosition());
-        telemetry.addData("time", timerz);
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
