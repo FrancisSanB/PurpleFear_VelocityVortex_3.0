@@ -113,10 +113,9 @@ public class RegisterOpModes {
         //manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
         manager.register("GoogleMapsMcDs", PacoVisionAutonomouse.class);
         manager.register("notyetColoblindPaco", PacoColorAutonomouse.class);
-        manager.register("AutonomousR", autonomousA.class);
-        manager.register("TeleOpShooterEncoder", TeleOpShooterEncoder.class);
+        manager.register("PacoBeaconColorAutonomouse511JoieTooDANKforYouMLGproSkillz",PacoBeaconColorAutonomouse511Joie.class);
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
-        manager.register("ODSstuff", AakarshODS.class);
+        manager.register("ODSOCDTEST", MR_ODS_Test.class);
 
 
     }

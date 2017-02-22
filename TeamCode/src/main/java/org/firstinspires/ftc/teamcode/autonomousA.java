@@ -102,22 +102,19 @@ public class autonomousA extends LinearOpMode {
 
             //  unlimitedDrive(-0.3, -0.3);
             if (colornumberA >= 9 && colornumberA <= 11) {
-                tankdrive(0.1, 0.1, 1000);
+                tankdrive(0.3, 0.3, 1000);
                 beaconleft.setPosition(0.01);
-                tankdrive(-0.1, -0.1, 1000);
-                stopMotors();
+                tankdrive(-0.3, -0.3, 1000);
+                break;
             }
             if (colornumberA >= 2 && colornumberA <= 4) {
-                tankdrive(0.1, 0.1, 1000);
+                tankdrive(0.3, 0.3, 1000);
                 beaconright.setPosition(0.99);
-                tankdrive(-0.1, -0.1, 1000);
-                stopMotors();
-            //beaconpaco(3);
-            telemetry.addData("color Value", colornumberA);
-            telemetry.update();
+                tankdrive(-0.3, -0.3, 1000);
+                break;
+            }
         }
     }
-}
 
 
 
@@ -213,10 +210,6 @@ public class autonomousA extends LinearOpMode {
             elapsedtime.reset();
         }
     }
-
-
-
-
 }
 
 
