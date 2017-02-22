@@ -25,7 +25,7 @@ public class ODStest extends LinearOpMode{
         while (opModeIsActive()) {
 
             // send the info back to driver station using telemetry function.
-            telemetry.addData("Raw",    odsSensor.getRawLightDetected());
+            telemetry.addData("Raw",    odsSensor.getRawLightDetected()); //should be a # between 0 and 25
             telemetry.addData("Normal", odsSensor.getLightDetected());
 
             telemetry.update();

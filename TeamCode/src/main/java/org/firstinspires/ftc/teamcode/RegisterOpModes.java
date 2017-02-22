@@ -102,7 +102,7 @@ public class RegisterOpModes {
         manager.register("AutonomousBlueLine", Autonomous2.class);
         manager.register("ServoTest3", ServoTest3.class);*/
         manager.register("teleop", org.firstinspires.ftc.teamcode.TeleOp.class);
-        manager.register("color", ColorSensorAutonomous.class);
+        //manager.register("color", ColorSensorAutonomous.class);
         manager.register("PacoTacoTeleOp",MVMSTeleOp.class);
         manager.register("AutonomousBlueCorner", Autonomous1.class);
         manager.register("AutonomousBlueLinezzz", Autonomous2.class);
@@ -110,13 +110,12 @@ public class RegisterOpModes {
         manager.register("AutonomousRedCorner", Autonomous4.class);
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
         manager.register("AutonomousVuforia", AutonomousVuforia.class);
-        manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
+        //manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
         manager.register("GoogleMapsMcDs", PacoVisionAutonomouse.class);
         manager.register("notyetColoblindPaco", PacoColorAutonomouse.class);
-        manager.register("AutonomousR", autonomousA.class);
-        manager.register("TeleOpShooterEncoder", TeleOpShooterEncoder.class);
+        manager.register("PacoBeaconColorAutonomouse511JoieTooDANKforYouMLGproSkillz",PacoBeaconColorAutonomouse511Joie.class);
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
-        manager.register("ODSstuff", AakarshODS.class);
+        manager.register("ODSOCDTEST", MR_ODS_Test.class);
 
 
     }
