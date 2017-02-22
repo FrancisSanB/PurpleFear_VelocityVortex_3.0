@@ -5,7 +5,6 @@ package org.firstinspires.ftc.teamcode;
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.vuforia.HINT;
@@ -23,6 +22,9 @@ import com.qualcomm.robotcore.hardware.I2cDevice;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
 import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
+
 
 import com.qualcomm.robotcore.util.ElapsedTime;
 /*
@@ -31,7 +33,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 * Stolen By Edmund on 2/11/2017
 */
 
-
 public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
 
     DcMotor leftback_motor;     //identify all of the tacos
@@ -39,47 +40,67 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
     DcMotor leftfront_motor;
     DcMotor rightfront_motor;
     DcMotor tumbler;
-    /*DcMotor shooterright;
-    DcMotor shooterleft;
-    DcMotor elevator;
+    DcMotor shooterRight;
+    DcMotor shooterLeft;
     Servo beaconright;
-    Servo beaconleft;*/
+    Servo beaconleft;
     ElapsedTime elapsedtime = new ElapsedTime();
     byte[] colorCcache;
+    byte[] colorAcache;
+    OpticalDistanceSensor ODS;
+    ModernRoboticsI2cGyro gyro;
 
-    //ColorSensor colorSensor; //don't pu this in
 
+    //Raw value is between 0 and 1
+    double odsReadingRaw;
+
+    // odsReadingRaw to the power of (-0.5)
+    static double odsReadingLinear;
+
+    //distance from bacon
+    double distance;
     I2cDevice colorC;
+    I2cDevice colorA;
+    I2cDeviceSynch colorAreader;
     I2cDeviceSynch colorCreader;
+
+
     boolean LEDState = true;     //Tracks the mode of the color sensor; Active = true, Passive = false
 
-    ///////////////8----
-    double PosMaxDeg = 175;
-    double NegMaxDeg = -175;
 
     @Override
-    public void runOpMode() throws InterruptedException{
-
+    public void runOpMode() throws InterruptedException {
         leftfront_motor = hardwareMap.dcMotor.get("leftfront_motor");
         leftback_motor = hardwareMap.dcMotor.get("leftback_motor");
         rightfront_motor = hardwareMap.dcMotor.get("rightfront_motor");
         rightback_motor = hardwareMap.dcMotor.get("rightback_motor");
         tumbler = hardwareMap.dcMotor.get("tublr");
-         /*shooterleft = hardwareMap.dcMotor.get("shooterL");
-        shooterright = hardwareMap.dcMotor.get("shooterR");
-        elevator = hardwareMap.dcMotor.get("elevator");
-        beaconright = hardwareMap.servo.get("bacon2");
-        beaconleft = hardwareMap.servo.get("bacon");*/
+        shooterLeft = hardwareMap.dcMotor.get("shooterL");
+        shooterRight = hardwareMap.dcMotor.get("shooterR");
+        beaconright = hardwareMap.servo.get("Bacon2");
+        beaconleft = hardwareMap.servo.get("Bacon");
         colorC = hardwareMap.i2cDevice.get("cc");
-        //colorSensor = hardwareMap.colorSensor.get("cc");
+        gyro = (ModernRoboticsI2cGyro) hardwareMap.gyroSensor.get("gyro");
+
+        colorCreader = new I2cDeviceSynchImpl(colorA, I2cAddr.create8bit(0x3c), false);
         colorCreader = new I2cDeviceSynchImpl(colorC, I2cAddr.create8bit(0x3c), false);
 
+        colorAreader.engage();
         colorCreader.engage();
 
         colorCreader.write8(3, 0);
+        colorAreader.write8(3, 0);
+
+        gyro.calibrate();
+        while (!isStopRequested() && gyro.isCalibrating()) {
+            sleep(50);
+            idle();
+        }
+
+
         waitForStart();
-        unlimitedDrive(-0.3, -0.3);
-        while (opModeIsActive()) {
+        /*while (opModeIsActive()) {
+
             colorCcache = colorCreader.read(0x04, 1);
             int colornumber = colorCcache[0] & 0xFF;
 
@@ -88,22 +109,150 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
 
             telemetry.addData("4 A", colorCreader.getI2cAddress().get8Bit());
 
-            telemetry.update();
-
-            if (colornumber >= 14 && colornumber <= 16) {
-                telemetry.update();
+            telemetry.update();*/
+/*
+            encoderDrive(-0.3,-0.3,1/2);
+            shooterDrive(1,1);
+            sleep(2000);
+            tumblerDrive(1);
+            sleep(5000);
+            stopMotors();
+            gyroTurn(50);
+            unlimitedDrive(-0.3, -0.3);
+            if (colornumber >= 13 && colornumber <= 16) {
                 stopMotors();
-                telemetry.addLine("at white");
-                break;
+                beaconpaco(3);
             }
+            gyroTurn(45);
+            encoderDrive(0.3, 0.3, 1/8);
+            sleep(911);
+            colorCreader.write8(3, 1);
+            colorAreader.write8(3, 1);
+            encoderDrive(-0.3,-0.3, 3/2);
+            /*
+            while (opModeIsActive()) {
+                colorCcache = colorCreader.read(0x04, 1);
+                colorAcache = colorAreader.read(0x04, 1);
+
+
+                int colornumberA = colorAcache[0] & 0xFF;
+                int colornumberC = colorCcache[0] & 0xFF;
+                //display values
+                telemetry.addData("2 #C", colorCcache[0] & 0xFF);  //colorCcashe[0] is the color number
+                telemetry.addData("1 #A", colorAcache[0] & 0xFF);
+
+                telemetry.addData("4 C", colorCreader.getI2cAddress().get8Bit());
+                telemetry.addData("3 A", colorAreader.getI2cAddress().get8Bit());
+
+                //  unlimitedDrive(-0.3, -0.3);
+                if (colornumberA >= 9 && colornumberA <= 11) {
+                    encoderDrive(0.3,0.3,1/2);
+                    stopMotors();
+                    beaconleft.setPosition(0.01);
+                    encoderDrive(-0.3,-0.3,1/2);
+                    encoderDrive(-0.3,-0.3,1/2);
+
+                    stopMotors();
+                    encoderDrive(0.3, 0.3, 8);
+                }
+                if (colornumberA >= 2 && colornumberA <= 4) {
+                    unlimitedDrive(0.3, 0.3);
+                    ODS(8);
+                    stopMotors();
+                    beaconright.setPosition(0.99);
+                    unlimitedDrive(-0.3, -0.3);
+                    ODS(3.8);
+                    stopMotors();
+                    encoderDrive(0.3, 0.3, 8);
+                }
+                gyroTurn(-40);
+                encoderDrive(0.3,0.3,18);
+                sleep(3000);
+            }
+
+*/
+    //2003 is and}
+    }
+
+    private void servoDrive (int servoNumber) throws InterruptedException {
+        if (servoNumber == 1) {
+            beaconleft.setPosition(0.9);
         }
-        tankdrive(-0.3, 0.3, 1700);
-        tankdrive(0.3, 0.3, 500);
-        beaconpaco(3);
-        sleep(911);
+
+        if (servoNumber == 2) {
+            beaconright.setPosition(0.1);
+        }
+    }
+    private void encoderDrive(double leftY, double rightY, int distance) throws InterruptedException {
+        distance = distance*1440;
+        //telemetry.addData(">", "method called");
+
+        leftfront_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightback_motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //reset the encoders
+        leftfront_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightback_motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //tell it to start counting the position
+       /*leftfront_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       rightback_motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
+
+        //set the distance
+        leftfront_motor.setTargetPosition(distance);
+        rightback_motor.setTargetPosition(distance);
+
+        //telemetry.addData(">","encoder values set");
+
+        //set the power
+        unlimitedDrive(leftY, rightY);
+
+        while (opModeIsActive() && leftfront_motor.getCurrentPosition() < (distance - 180) && rightback_motor.getCurrentPosition() < (distance - 180)) {
+           /*telemetry.addData("number of ticks right", rightback_motor.getCurrentPosition());
+           telemetry.addData("number of ticks left", leftfront_motor.getCurrentPosition());
+           telemetry.update();*/
+            //wait until the position is reached
+        }
+
+        //telemetry.addData(">", "while loop called");
+        //telemetry.addData("number of ticks right", rightback_motor.getCurrentPosition());
+
+        rightfront_motor.setPower(0);
+        leftfront_motor.setPower(0);
+
+    }
+
+    private void tumblerDrive(double power) throws InterruptedException {
+        tumbler.setPower(power);
+    }
+    private void ODS(double dis) throws InterruptedException {
+        while(opModeIsActive() && distance != dis) {
+            odsReadingRaw = ODS.getRawLightDetected() / 25;                   //update raw value (This function now returns a value between 0 and 5 instead of 0 and 1 as seen in the video)
+            odsReadingLinear = Math.pow(odsReadingRaw, -0.5);                //calculate linear value
+            distance = odsReadingLinear * 1.755568 - 0.7563;                      //calculate distance
+
+            //The below two equations operate the motors such that both motors have the same speed when the robot is the right distance from the wall
+            //As the robot gets closer to the wall, the left motor received more power and the right motor received less power
+            //The opposite happens as the robot moves further from the wall. This makes a proportional and elegant wall following robot.
+            //See the video explanation on the Modern Robotics YouTube channel, the ODS product page, or modernroboticsedu.com.
+            //mLeft.setPower(odsReadingLinear * 2);
+            //mRight.setPower(0.5 - (odsReadingLinear * 2));
+
+            telemetry.addData("0 ODS Raw", odsReadingRaw);
+            telemetry.addData("1 ODS linear", odsReadingLinear);
+            telemetry.addData("2 ODS Distance", distance);
+            telemetry.update();
+            //telemetry.addData("2 Motor Left", mLeft.getPower());
+            //telemetry.addData("3 Motor Right", mRight.getPower());
+        }
     }
 
 
+    private void shooterDrive(double leftpower, double rightpower) throws InterruptedException {
+        shooterLeft.setPower(leftpower);
+        shooterRight.setPower(-rightpower);
+
+    }
 
     private void tankdrive(double leftY, double rightY, long sleepAmount) throws InterruptedException {
 
@@ -121,9 +270,40 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
         rightfront_motor.setPower(0);
         rightback_motor.setPower(0);
     }
+    private void gyroTurn (double angleTurn) throws InterruptedException {
+        int xVal, yVal, zVal = 0;
+        int heading = 0;
+        int angleZ = 0;
+        int initial_angle = 0;
+        int angle_difference = 0;
+        boolean lastResetState = false;
+        boolean curResetState = false;
+        gyro.calibrate();
+        while (opModeIsActive()) {
+
+            while (!isStarted()) {
+                telemetry.addData(">", "Robot angle = %d", gyro.getIntegratedZValue());
+                telemetry.update();
+                idle();
+            }
+            gyro.resetZAxisIntegrator();
+
+            initial_angle = gyro.getIntegratedZValue();
+            telemetry.addData("1", "Int. Ang. %03d", angleZ);
+            telemetry.update();
+
+            while (angle_difference < angleTurn && -angle_difference > angleTurn) { //change angle to what’s needed
+                unlimitedDrive(-0.3, 0.3);
+                angleZ = gyro.getIntegratedZValue();
+                telemetry.addData("1", "Int. Ang. %03d", angleZ);
+                telemetry.update();
+                angle_difference = angleZ - initial_angle;
+            }
+            stopMotors();
+        }
+    }
 
     private void unlimitedDrive(double L, double R){
-        R = -R;
         leftfront_motor.setPower(L); //set the according power to each motor
         leftback_motor.setPower(L);
         rightfront_motor.setPower(R);
@@ -135,6 +315,11 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
         leftback_motor.setPower(0);
         rightfront_motor.setPower(0);
         rightback_motor.setPower(0);
+        tumbler.setPower(0);
+        shooterLeft.setPower(0);
+        shooterRight.setPower(0);
+        beaconleft.setPosition(0);
+        beaconright.setPosition(0);
     }
     private void beaconpaco(int beaconnumber) throws InterruptedException {
 
@@ -163,7 +348,7 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
             OpenGLMatrix pose = ((VuforiaTrackableDefaultListener) beacons.get(beaconnumber).getListener()).getPose();
             if (pose != null) {
                 VectorF translation = pose.getTranslation();
-
+                int onehundredseventyfive = 175;
                 telemetry.addData("translation", translation);
                 telemetry.addData("atmcdonalds", beacon_aligned);
                 telemetry.addData("time elapsed ms", elapsedtime.milliseconds());
@@ -172,20 +357,22 @@ public class PacoBeaconColorAutonomouse511Joie extends LinearOpMode {
                 double degreesToTurn = Math.toDegrees(Math.atan2(translation.get(0), translation.get(2)));
                 telemetry.addData("degrees", degreesToTurn);
 
-                if (degreesToTurn <= PosMaxDeg && degreesToTurn > 0) {
+                if (degreesToTurn <= onehundredseventyfive && degreesToTurn > 0) {
                     unlimitedDrive(0.3, -0.3);
                     telemetry.addLine("turning right");
-                } else if (degreesToTurn >= NegMaxDeg && degreesToTurn < 0) {
+                } else if (degreesToTurn >= -onehundredseventyfive && degreesToTurn < 0) {
                     unlimitedDrive(-0.3,0.3);
                     telemetry.addLine("turning left");
-                } else if (degreesToTurn < NegMaxDeg || degreesToTurn > PosMaxDeg){
+                } else if (degreesToTurn < -onehundredseventyfive || degreesToTurn > onehundredseventyfive){
                     beacon_aligned = true;
                     stopMotors();
-                    telemetry.addLine("YOU'VE ARRIVED AT MCDONALDS");
+                    wait(1500);
+                    tankdrive(-0.3,-0.3,1000);
+                    telemetry.addLine("YOU'VE ARRIVED AT the Beacon");
+
                 }
             }else {
                 unlimitedDrive(-0.3,0.3);
-                telemetry.addLine("Searching...");
             }
             telemetry.update();
             elapsedtime.reset();
