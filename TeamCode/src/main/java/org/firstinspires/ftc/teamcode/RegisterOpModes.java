@@ -34,6 +34,7 @@ package org.firstinspires.ftc.teamcode;
 import android.hardware.Sensor;
 import android.util.Log;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
 import com.qualcomm.robotcore.eventloop.opmode.OpModeRegistrar;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -82,6 +83,26 @@ public class RegisterOpModes {
 
         //  Concept Samples
         // manager.register("Null Op",                ConceptNullOp.class);
+
+
+        /*manager.register("MVMSTeleOp", MVMSTeleOp.class);
+        //manager.register("ComputerVision",ComputerVision.class);
+        manager.register("Autonomous1", Autonomous1.class);
+        manager.register("BeaconAutonomous", BeaconAutonomous.class);
+        manager.register("Autonomous2", Autonomous2.class);
+        manager.register("Autonomous3", Autonomous3.class);
+        manager.register("Autonomous4", Autonomous4.class);
+
+        manager.register("PacoTacoTeleOp", MVMSTeleOp.class);
+        //manager.register("(1)Color Sensor Test",ColourSensorTestCode.class);
+        //manager.register("(2)Color Sensor(not stable)",ColorSensorDrive.class);
+        //manager.register("(3)Autonomous Color Sensor", AutonomousColourSensor.class);
+        //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
+        manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
+        manager.register("AutonomousBlueLine", Autonomous2.class);
+        manager.register("ServoTest3", ServoTest3.class);*/
+        manager.register("teleop", org.firstinspires.ftc.teamcode.TeleOp.class);
+        manager.register("color", ColorSensorAutonomous.class);
         manager.register("PacoTacoTeleOp",MVMSTeleOp.class);
         manager.register("AutonomousBlueCorner", Autonomous1.class);
         manager.register("AutonomousBlueLinezzz", Autonomous2.class);
@@ -95,6 +116,7 @@ public class RegisterOpModes {
 
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
         manager.register("ODSOCDTEST", MR_ODS_Test.class);
+
 
     }
 }
