@@ -2,6 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 /**
  * Created by andre on 2/4/2017.
+ * Created again by paco on 1/2/2017.
+ * Not sponsored in any way by pacogames.com
+ * Stolen By Edmund on 2/11/2017
+ * stolen again by Aakarsh on 2/11/17
+ * stolen one last time by Francis on 2/20/17
+ * hahahaha it's all mine now!!!
  */
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -25,12 +31,6 @@ import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import com.qualcomm.robotcore.util.ElapsedTime;
-/*
-* Created by paco on 1/2/2017.
-* Not sponsored in any way by pacogames.com
-* Stolen By Edmund on 2/11/2017
-* stolen again by Aakarsh on 2/11/17
-*/
 
 public class autonomousA extends LinearOpMode {
 

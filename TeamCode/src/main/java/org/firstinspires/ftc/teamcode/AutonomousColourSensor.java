@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 /**
  * Created by Aakarsh on 1/29/2017.
  */
-public class ColorSensorAutonomous extends LinearOpMode {
+public class AutonomousColourSensor extends LinearOpMode {
 
     DcMotor leftbackmotor;     //identify all of the tacos
     DcMotor rightbackmotor;

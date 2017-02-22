@@ -27,7 +27,10 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
 
     int a = 1;
     boolean shooterDown = false;
-    float tStart = System.currentTimeMillis();
+    public static int currentTimeMillis() {
+        return (int) (System.currentTimeMillis() & 0x00000000FFFFFFFFL);
+    }
+    private final long createdMillis = System.currentTimeMillis();
 
     @Override
     public void init() {
@@ -42,6 +45,7 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         beaconServo2 = hardwareMap.servo.get("Bacon2");
         //elevator = hardwareMap.dcMotor.get("elevator");
 
+
     }
 
     @Override
@@ -52,17 +56,14 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         boolean out = gamepad1.right_bumper;
         boolean shooter = gamepad1.a;
         boolean shooterBack = gamepad1.dpad_up;
-        float tEnd = System.currentTimeMillis();
-        float tDelta = tEnd - tStart;
-        //float elapsedSeconds = tDelta / 1000.0;
 
         shooterL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         shooterR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         float rightEncoder = shooterR.getCurrentPosition();
         float leftEncoder = shooterL.getCurrentPosition();
-        //float rightRatio = rightEncoder/elapsedSeconds;
-        //float leftRatio = leftEncoder/elapsedSeconds;
+        float rightRatio = rightEncoder/getAgeInSeconds();
+        float leftRatio = leftEncoder/getAgeInSeconds();
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
@@ -72,9 +73,9 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
         telemetry.addData("servo power", beaconServo1.getPosition());
-        //telemetry.addData("shooter encoder values left", leftRatio);
-        //telemetry.addData("shooter encoder values right", rightRatio);
-        telemetry.addData("time", time);
+        telemetry.addData("shooter encoder values left", leftRatio);
+        telemetry.addData("shooter encoder values right", rightRatio);
+        telemetry.addData("time", getAgeInSeconds());
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
         rightY = (float) scaleInput(rightY);    //it
@@ -136,6 +137,12 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
             beaconServo2.setPosition(0.9);
         }
 
+    }
+
+
+    int getAgeInSeconds() {
+        long nowMillis = System.currentTimeMillis();
+        return (int)((nowMillis - this.createdMillis) / 1000);
     }
 
     double scaleInput(double dVal)  {
