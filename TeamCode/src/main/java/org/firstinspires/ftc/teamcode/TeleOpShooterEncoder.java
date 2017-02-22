@@ -34,7 +34,7 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         public void run() {
             secondspassed++;
         }
-    }
+    };
 
     @Override
     public void init() {
@@ -67,8 +67,8 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
 
         float rightEncoder = shooterR.getCurrentPosition();
         float leftEncoder = shooterL.getCurrentPosition();
-        float rightRatio = rightEncoder/time;
-        float leftRatio = leftEncoder/time;
+        //float rightRatio = rightEncoder/time;
+        //float leftRatio = leftEncoder/time;
 
         telemetry.addData("RightY", rightY);        //print out the current y axis of both joysticks
         telemetry.addData("LeftY", leftY);
@@ -78,8 +78,8 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
         telemetry.addData("servo power", beaconServo1.getPosition());
-        telemetry.addData("shooter encoder values left", leftRatio);
-        telemetry.addData("shooter encoder values right", rightRatio);
+       // telemetry.addData("shooter encoder values left", leftRatio);
+        //telemetry.addData("shooter encoder values right", rightRatio);
         telemetry.addData("time", time);
 
         leftY = (float) scaleInput(leftY);      //use the scaleInput function on the power to scale
