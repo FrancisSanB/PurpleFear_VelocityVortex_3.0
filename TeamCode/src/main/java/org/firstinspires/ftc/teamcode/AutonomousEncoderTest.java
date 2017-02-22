@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.test.InstrumentationTestRunner;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import java.util.Timer;
@@ -35,15 +37,12 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
         leftbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftfrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightfrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        waitForStart();
 
         //Math.abs(e) > 20 do this
 
-        encoderDrive(1,1, 1);
-        //PDTarget(1440, 1440);
+        waitForStart();
+
+        encoderDrive(1, 1, 1);
 
     }
 
@@ -86,6 +85,37 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
     }
 
+    private void encoderDrive(double leftY, double rightY, int distance) throws InterruptedException {
+        distance = distance*1440;
+
+        //reset the encoders
+        leftbackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightbackMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set the distance
+        leftbackMotor.setTargetPosition(distance);
+        rightbackMotor.setTargetPosition(distance);
+
+        //tell it to start counting the position
+        leftbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set the power
+        encoderTankDrive(leftY, rightY);
+
+        while (leftbackMotor.isBusy() && rightbackMotor.isBusy()) {
+            //wait until the position is reached
+
+        }
+
+        encoderTankDrive(0, 0);
+
+        leftbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightbackMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    /*
     private void encoderDrive(double leftY, double rightY, int rotationNumber) throws InterruptedException {
         telemetry.addData("encoderdrive called", leftY);
         rotationNumber = rotationNumber*1440;
@@ -154,7 +184,7 @@ public class AutonomousEncoderTest extends LinearOpMode {
         double pdTerm = P*leftError + D*(leftError - lastLeftError);
         lastLeftError = leftError;
         return constrain(pdTerm, -1.0, 1.0);
-    }
+    } */
 
     /**
      * Returns v constrained between min and max
