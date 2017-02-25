@@ -9,30 +9,34 @@ package org.firstinspires.ftc.teamcode;
 * stolen one last time by Francis on 2/20/17
 * hahahaha it's all mine now!!!*/
 
+        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
+        import com.qualcomm.robotcore.hardware.Servo;
+        import com.vuforia.HINT;
+        import com.vuforia.Vuforia;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import org.firstinspires.ftc.robotcore.external.ClassFactory;
+        import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
+        import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
+        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
+        import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
+        import com.qualcomm.robotcore.hardware.I2cAddr;
+        import com.qualcomm.robotcore.hardware.I2cDevice;
+        import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
+        import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
+        import com.qualcomm.robotcore.util.ElapsedTime;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.vuforia.HINT;
-import com.vuforia.Vuforia;
-
-import org.firstinspires.ftc.robotcore.external.ClassFactory;
-import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackable;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackableDefaultListener;
-import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
-import com.qualcomm.robotcore.hardware.I2cAddr;
-import com.qualcomm.robotcore.hardware.I2cDevice;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynch;
-import com.qualcomm.robotcore.hardware.I2cDeviceSynchImpl;
-import com.qualcomm.robotcore.util.ElapsedTime;
-
-import com.qualcomm.robotcore.util.ElapsedTime;
+        import com.qualcomm.robotcore.util.ElapsedTime;
+/*
+* Created by paco on 1/2/2017.
+* Not sponsored in any way by pacogames.com
+* Stolen By Edmund on 2/11/2017
+* stolen again by Aakarsh on 2/11/17
+*/
 
 
 
@@ -107,7 +111,6 @@ public class AutonomousODSBeacon extends LinearOpMode {
             //telemetry.addData("4 C", colorCreader.getI2cAddress().get8Bit());
             //telemetry.addData("3 A", colorAreader.getI2cAddress().get8Bit());
 
-
             raw1 = (int) (ods1.getLightDetected() * 1023);
             //telemetry.addData("ODS", raw1);
             unlimitedDrive(-0.3, -0.3);
@@ -117,10 +120,28 @@ public class AutonomousODSBeacon extends LinearOpMode {
             }
 
             if (colornumberA >= 9 && colornumberA <= 11 && count == 1) {
-                tankdrive(0.3, 0.3, 500);
-                beaconleft.setPosition(0.1);
-                sleep(200);
-                tankdrive(-0.3, -0.3, 520);
+                encoderDrive(0.3, 0.3, 1/2);
+                beaconleft.setPosition(0.01);
+                encoderDrive(-0.3, -0.3, -11/20);
+                break;
+            }
+            if (colornumberA >= 2 && colornumberA <= 4 && count == 1) {
+                encoderDrive(0.3, 0.3, 1/2);
+                beaconright.setPosition(0.99);
+                encoderDrive(-0.3, -0.3, -11/20);
+                break;
+
+            }
+            telemetry.addData("color Value", colornumberA);
+            telemetry.update();
+
+
+
+            //  unlimitedDrive(-0.3, -0.3);
+            if (colornumberA >= 9 && colornumberA <= 11) {
+                tankdrive(0.3, 0.3, 1000);
+                beaconleft.setPosition(0.01);
+                tankdrive(-0.3, -0.3, 1000);
                 break;
             }
             if (colornumberA >= 2 && colornumberA <= 4 && count == 1) {
@@ -136,13 +157,6 @@ public class AutonomousODSBeacon extends LinearOpMode {
 
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -206,10 +220,6 @@ public class AutonomousODSBeacon extends LinearOpMode {
             //wait until the position is reached
 
         }
+
     }
 }
-
-
-
-
-

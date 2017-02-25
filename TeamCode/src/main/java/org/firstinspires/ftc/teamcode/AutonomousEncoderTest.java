@@ -75,19 +75,18 @@ public class AutonomousEncoderTest extends LinearOpMode {
         rightbackMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
 
         //set the distance
+
+        //tell it to start counting the position
+        leftbackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightbackMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         leftbackMotor.setTargetPosition(distance);
         rightbackMotor.setTargetPosition(distance);
-
-        //telemetry.addData(">","encoder values set");
 
         //set the power
         encoderTankDrive(leftY, rightY);
 
-        while (opModeIsActive() && Math.abs(leftbackMotor.getCurrentPosition()) < (Math.abs(distance) - 180) ) {
-            telemetry.addData("right", rightbackMotor.getCurrentPosition());
-            telemetry.addData("left", leftbackMotor.getCurrentPosition());
-            telemetry.addData("distance", distance);
-            telemetry.update();
+        while (opModeIsActive() && leftbackMotor.getCurrentPosition() < (distance - 180) && rightbackMotor.getCurrentPosition() < (distance - 180)) {
             //wait until the position is reached
         }
 

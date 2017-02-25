@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 /**
  * Created by Aakarsh on 1/8/2017.
  */
-public class ODStest extends LinearOpMode{
+public class AutonomousODS extends LinearOpMode{
     OpticalDistanceSensor odsSensor;  // Hardware Device Object
 
     @Override
