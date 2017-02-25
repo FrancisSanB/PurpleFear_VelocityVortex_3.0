@@ -84,38 +84,20 @@ public class RegisterOpModes {
         //  Concept Samples
         // manager.register("Null Op",                ConceptNullOp.class);
 
-
-        /*manager.register("MVMSTeleOp", MVMSTeleOp.class);
-        //manager.register("ComputerVision",ComputerVision.class);
-        manager.register("Autonomous1", Autonomous1.class);
-        manager.register("BeaconAutonomous", BeaconAutonomous.class);
-        manager.register("Autonomous2", Autonomous2.class);
-        manager.register("Autonomous3", Autonomous3.class);
-        manager.register("Autonomous4", Autonomous4.class);
-
-        manager.register("PacoTacoTeleOp", MVMSTeleOp.class);
-        //manager.register("(1)Color Sensor Test",ColourSensorTestCode.class);
-        //manager.register("(2)Color Sensor(not stable)",ColorSensorDrive.class);
-        //manager.register("(3)Autonomous Color Sensor", AutonomousColourSensor.class);
-        //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
-        manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
-        manager.register("AutonomousBlueLine", Autonomous2.class);
-        manager.register("ServoTest3", ServoTest3.class);*/
         manager.register("teleop", org.firstinspires.ftc.teamcode.TeleOp.class);
         //manager.register("color", ColorSensorAutonomous.class);
         manager.register("PacoTacoTeleOp",MVMSTeleOp.class);
         manager.register("AutonomousBlueCorner", Autonomous1.class);
-        manager.register("AutonomousBlueLinezzz", Autonomous2.class);
+        manager.register("AutonomousBlueLine", Autonomous2.class);
         manager.register("AutonomousRedLine", Autonomous3.class);
         manager.register("AutonomousRedCorner", Autonomous4.class);
         manager.register("AutonomousEncoderTest", AutonomousEncoderTest.class);
         manager.register("AutonomousVuforia", AutonomousVuforia.class);
-        //manager.register("AutonomosuViforiaMethod", AutonomousVuforia2.class);
         manager.register("GoogleMapsMcDs", PacoVisionAutonomouse.class);
         manager.register("notyetColoblindPaco", PacoColorAutonomouse.class);
-        manager.register("PacoBeaconColorAutonomouse511JoieTooDANKforYouMLGproSkillz",PacoBeaconColorAutonomouse511Joie.class);
+        manager.register("AutonomosBeacon", AutonomousBeacon.class);
+        manager.register("TeleopEncoder", TeleOpShooterEncoder.class);
         //manager.register("NeverestMotorTest", NeverestMotorCheck.class);
-        manager.register("ODSOCDTEST", MR_ODS_Test.class);
 
 
     }

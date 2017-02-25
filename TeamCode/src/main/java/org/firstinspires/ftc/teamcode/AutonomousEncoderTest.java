@@ -42,9 +42,9 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
         waitForStart();
 
-        encoderDrive(1, 1, 1);
-        sleep(5000);
-        encoderDrivePD(1440, 1440);
+        encoderDrive(-1, -1, -5);
+        //sleep(5000);
+        //encoderDrivePD(1440, 1440);
 
 
     }
@@ -83,7 +83,11 @@ public class AutonomousEncoderTest extends LinearOpMode {
         //set the power
         encoderTankDrive(leftY, rightY);
 
-        while (opModeIsActive() && leftbackMotor.getCurrentPosition() < (distance - 180) && rightbackMotor.getCurrentPosition() < (distance - 180)) {
+        while (opModeIsActive() && Math.abs(leftbackMotor.getCurrentPosition()) < (Math.abs(distance) - 180) ) {
+            telemetry.addData("right", rightbackMotor.getCurrentPosition());
+            telemetry.addData("left", leftbackMotor.getCurrentPosition());
+            telemetry.addData("distance", distance);
+            telemetry.update();
             //wait until the position is reached
         }
 
@@ -92,7 +96,6 @@ public class AutonomousEncoderTest extends LinearOpMode {
 
         rightfrontMotor.setPower(0);
         leftfrontMotor.setPower(0);
-
     }
 
 

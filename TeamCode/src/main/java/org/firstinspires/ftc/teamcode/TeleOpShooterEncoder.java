@@ -73,6 +73,8 @@ public class TeleOpShooterEncoder extends MVMSTeleOpTelemetry {
         telemetry.addData("tumbler", tumbler.getCurrentPosition());
         telemetry.addData("shooter", shooter);
         telemetry.addData("servo power", beaconServo1.getPosition());
+        telemetry.addData("left shooter", leftEncoder);
+        telemetry.addData("right shooter", rightEncoder);
         telemetry.addData("shooter encoder values left", leftRatio);
         telemetry.addData("shooter encoder values right", rightRatio);
         telemetry.addData("time", getAgeInSeconds());
